@@ -4,6 +4,8 @@ from scapy.packet import Packet
 from scapy.fields import XShortField, XByteField, ConditionalField
 from scapy.all import bind_layers
 
+# TODO: It might be useful to move from PYASN1 to SCAPY ASN. Need to investigate.
+#       Until then, GoosePDU parsing is handled in goose_pdu.py
 
 class GOOSE(Packet):
     name = "GOOSE"
@@ -22,10 +24,10 @@ class GOOSE(Packet):
 class GOOSEPDU(Packet):
     name = "GOOSEPDU"
     fields_desc = [
-        # TODO: Change to conditional to ensure GOOSE
         XByteField("ID",0x61),
         XByteField("DefLen",0x81),
-        ConditionalField(XByteField("PDU1ByteLen",0x00),lambda pkt:pkt.DefLen^0x80 == 1),  # NOTE: Length comes from this byte's Least Significant Nibble. Not sure what MSN is for.
+         # NOTE: Length comes from this byte's Least Significant Nibble. Not sure what MSN is for.
+        ConditionalField(XByteField("PDU1ByteLen",0x00),lambda pkt:pkt.DefLen^0x80 == 1), 
         ConditionalField(XShortField("PDU2BytesLen",0x0000),lambda pkt:pkt.DefLen^0x80 == 2)
     ]
 
