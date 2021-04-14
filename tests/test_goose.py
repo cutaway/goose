@@ -9,16 +9,10 @@ from scapy.layers.l2 import Ether
 from scapy.layers.l2 import Dot1Q
 from scapy.compat import raw
 
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0, parentdir)
-
-print('Parent Dir: %s'%(parentdir))
-
-from ..goose.goose import GOOSE
-from ..goose.goose_pdu import AllData
-from ..goose.goose_pdu import Data
-from ..goose.goose_pdu import IECGoosePDU
+from goose.goose import GOOSE
+from goose.goose_pdu import AllData
+from goose.goose_pdu import Data
+from goose.goose_pdu import IECGoosePDU
 
 
 def test_goose_message():
